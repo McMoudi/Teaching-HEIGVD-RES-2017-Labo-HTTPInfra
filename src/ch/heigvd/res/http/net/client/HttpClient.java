@@ -1,4 +1,4 @@
-package ch.heigvd.res.ex.http.net.client;
+package ch.heigvd.res.http.net.client;
 
 import java.io.*;
 import java.net.Socket;
