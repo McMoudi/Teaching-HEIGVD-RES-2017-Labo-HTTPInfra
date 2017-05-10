@@ -29,6 +29,7 @@ public class HttpClient {
         PrintWriter pw = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
         pw.write("GET / HTTP/1.1" + "\r\n");
         pw.write("Host: " + host + "\r\n");
+        pw.write("Connection: close\r\n");
         pw.write("\r\n");
         pw.flush();
         // First we read the headers
@@ -49,9 +50,16 @@ public class HttpClient {
 
         if(length != -1) {
             LOG.log(Level.INFO, "Reading length: " + length);
-            byte[] data = new byte[length];
-            int bytesRead = clientSocket.getInputStream().read(data);
-            LOG.log(Level.INFO, "Bytes read: " + bytesRead);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] data = new byte[1024];
+            int read = 0;
+            int total = 0;
+            while((read = clientSocket.getInputStream().read(data, 0, data.length)) != -1 && total < length) {
+                baos.write(data, 0, read);
+                total += read;
+            }
+            baos.flush();
+            LOG.log(Level.INFO, "Bytes read: " + total);
             String response = new String(data, "UTF-8");
             System.out.println(response);
         }
