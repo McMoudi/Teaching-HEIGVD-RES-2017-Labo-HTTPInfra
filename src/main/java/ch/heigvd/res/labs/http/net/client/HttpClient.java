@@ -1,7 +1,7 @@
 package ch.heigvd.res.labs.http.net.client;
 
 import ch.heigvd.res.labs.http.utils.ReadResponseFilterInputStream;
-import ch.heigvd.res.labs.http.utils.Utils;
+import ch.heigvd.res.labs.http.utils.MIMEType;
 
 import java.io.*;
 import java.net.Socket;
@@ -30,10 +30,10 @@ public class HttpClient {
         return clientSocket != null && !clientSocket.isClosed();
     }
 
-    public void requestPage(String host, Utils.MIMETypes mimeType) throws IOException {
+    public void requestPage(String host, MIMEType mimeType) throws IOException {
         pw.write("GET / HTTP/1.1" + "\r\n");
         pw.write("Host: " + host + "\r\n");
-        pw.write("Accept: " + mimeType.getFormatStr() + "\r\n");
+        pw.write("Accept: " + mimeType.getFormat() + "\r\n");
         //pw.write("Connection: close\r\n");
         pw.write("\r\n");
         pw.flush();
@@ -72,7 +72,7 @@ public class HttpClient {
                 }
                 break;
             case "301 Moved permanently":
-                String location = "";
+                String location;
                 line = fr.readLine();
                 while(line != null && line != "") {
                     switch(line.substring(0, line.indexOf(":"))) {
@@ -84,7 +84,7 @@ public class HttpClient {
                     System.out.println(line);
                     line = fr.readLine();
                 }
-                // TODO: redirection
+                // TODO redirection
                 break;
             default:
         }
