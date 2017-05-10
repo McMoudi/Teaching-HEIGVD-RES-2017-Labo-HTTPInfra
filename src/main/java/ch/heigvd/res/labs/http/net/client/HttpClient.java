@@ -34,12 +34,12 @@ public class HttpClient {
         //pw.write("Connection: close\r\n");
         pw.write("\r\n");
         pw.flush();
-        int length = -1;
-        String response = "";
         String line = fr.readLine();
+        String response = line;
         switch(line.substring(9, line.length())) {
             case "200 OK":
                 // On lit les headers
+                int length = -1;
                 line = fr.readLine();
                 while(line != null && line != "") {
                     switch(line.substring(0, line.indexOf(":"))) {
@@ -67,8 +67,19 @@ public class HttpClient {
                     response = new String(baos.toByteArray(), "UTF-8");
                 }
                 break;
+            case "301 Moved permanently":
+                line = fr.readLine();
+                while(line != null && line != "") {
+                    switch(line.substring(0, line.indexOf(":"))) {
+                        case "Location":
+                            String location = line.substring(line.indexOf(":") + 2, line.length());
+                            // TODO: redirection
+                            break;
+                        default:
+                    }
+                    line = fr.readLine();
+                }
             default:
-                response = line;
         }
         System.out.println(response);
     }
