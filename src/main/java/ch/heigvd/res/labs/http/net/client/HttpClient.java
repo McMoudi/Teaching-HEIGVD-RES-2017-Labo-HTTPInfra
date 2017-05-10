@@ -13,8 +13,13 @@ public class HttpClient {
 
     private Socket clientSocket;
 
+    private ReadResponseFilterInputStream fr;
+    private PrintWriter pw;
+
     public void connect(String server) throws IOException {
         clientSocket = new Socket(server, 80);
+        fr = new ReadResponseFilterInputStream(clientSocket.getInputStream());
+        pw = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
     }
 
     public void disconnect() throws IOException {
@@ -26,8 +31,6 @@ public class HttpClient {
     }
 
     public void requestPage(String host, Utils.MIMETypes mimeType) throws IOException {
-        ReadResponseFilterInputStream fr = new ReadResponseFilterInputStream(clientSocket.getInputStream());
-        PrintWriter pw = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
         pw.write("GET / HTTP/1.1" + "\r\n");
         pw.write("Host: " + host + "\r\n");
         pw.write("Accept: " + mimeType.getFormatStr() + "\r\n");
