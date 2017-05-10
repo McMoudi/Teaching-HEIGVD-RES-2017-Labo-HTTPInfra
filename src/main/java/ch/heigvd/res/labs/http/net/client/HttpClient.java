@@ -30,7 +30,7 @@ public class HttpClient {
         PrintWriter pw = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
         pw.write("GET / HTTP/1.1" + "\r\n");
         pw.write("Host: " + host + "\r\n");
-        pw.write("Accept: " + mimeType.getFormatStr());
+        pw.write("Accept: " + mimeType.getFormatStr() + "\r\n");
         //pw.write("Connection: close\r\n");
         pw.write("\r\n");
         pw.flush();
