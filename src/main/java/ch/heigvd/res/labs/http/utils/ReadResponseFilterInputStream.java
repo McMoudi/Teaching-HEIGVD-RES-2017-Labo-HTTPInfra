@@ -1,4 +1,4 @@
-package ch.heigvd.res.http.utils;
+package ch.heigvd.res.labs.http.utils;
 
 import java.io.*;
 

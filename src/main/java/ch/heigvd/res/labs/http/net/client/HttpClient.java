@@ -1,6 +1,6 @@
-package ch.heigvd.res.http.net.client;
+package ch.heigvd.res.labs.http.net.client;
 
-import ch.heigvd.res.http.utils.ReadResponseFilterInputStream;
+import ch.heigvd.res.labs.http.utils.ReadResponseFilterInputStream;
 
 import java.io.*;
 import java.net.Socket;
@@ -29,7 +29,7 @@ public class HttpClient {
         PrintWriter pw = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
         pw.write("GET / HTTP/1.1" + "\r\n");
         pw.write("Host: " + host + "\r\n");
-        pw.write("Connection: close\r\n");
+        //pw.write("Connection: close\r\n");
         pw.write("\r\n");
         pw.flush();
         // First we read the headers
@@ -54,14 +54,14 @@ public class HttpClient {
             byte[] data = new byte[1024];
             int read = 0;
             int total = 0;
-            while((read = clientSocket.getInputStream().read(data, 0, data.length)) != -1 && total < length) {
+            while(total < length && (read = clientSocket.getInputStream().read(data, 0, data.length)) != -1) {
                 baos.write(data, 0, read);
                 total += read;
             }
             baos.flush();
             LOG.log(Level.INFO, "Bytes read: " + total);
             String response = new String(baos.toByteArray(), "UTF-8");
-            System.out.println(response);
+            //System.out.println(response);
         }
     }
 }

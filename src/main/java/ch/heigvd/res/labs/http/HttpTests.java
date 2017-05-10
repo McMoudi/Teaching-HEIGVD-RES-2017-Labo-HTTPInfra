@@ -1,6 +1,6 @@
-package ch.heigvd.res.http.net;
+package ch.heigvd.res.labs.http;
 
-import ch.heigvd.res.http.net.client.HttpClient;
+import ch.heigvd.res.labs.http.net.client.HttpClient;
 
 import java.io.IOException;
 
