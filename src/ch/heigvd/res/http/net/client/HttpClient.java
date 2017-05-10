@@ -1,6 +1,6 @@
 package ch.heigvd.res.http.net.client;
 
-import ch.heigvd.res.http.utils.ReadResponseFilterReader;
+import ch.heigvd.res.http.utils.ReadResponseFilterInputStream;
 
 import java.io.*;
 import java.net.Socket;
@@ -25,7 +25,7 @@ public class HttpClient {
     }
 
     public void requestPage(String host) throws IOException {
-        ReadResponseFilterReader fr = new ReadResponseFilterReader(new InputStreamReader(clientSocket.getInputStream()));
+        ReadResponseFilterInputStream fr = new ReadResponseFilterInputStream(clientSocket.getInputStream());
         PrintWriter pw = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
         pw.write("GET / HTTP/1.1" + "\r\n");
         pw.write("Host: " + host + "\r\n");
@@ -60,7 +60,7 @@ public class HttpClient {
             }
             baos.flush();
             LOG.log(Level.INFO, "Bytes read: " + total);
-            String response = new String(data, "UTF-8");
+            String response = new String(baos.toByteArray(), "UTF-8");
             System.out.println(response);
         }
     }

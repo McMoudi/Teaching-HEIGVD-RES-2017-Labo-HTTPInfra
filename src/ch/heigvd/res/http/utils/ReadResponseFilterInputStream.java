@@ -1,17 +1,19 @@
 package ch.heigvd.res.http.utils;
 
-import java.io.FilterReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 
-public class ReadResponseFilterReader extends FilterReader {
+public class ReadResponseFilterInputStream extends FilterInputStream {
+
     /**
-     * Creates a new filtered reader.
+     * Creates a <code>FilterInputStream</code>
+     * by assigning the  argument <code>in</code>
+     * to the field <code>this.in</code> so as
+     * to remember it for later use.
      *
-     * @param in a Reader object providing the underlying stream.
-     * @throws NullPointerException if <code>in</code> is <code>null</code>
+     * @param in the underlying input stream, or <code>null</code> if
+     *           this instance is to be created without an underlying stream.
      */
-    public ReadResponseFilterReader(Reader in) {
+    public ReadResponseFilterInputStream(InputStream in) {
         super(in);
     }
 
