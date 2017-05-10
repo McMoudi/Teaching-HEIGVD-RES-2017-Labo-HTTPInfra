@@ -38,7 +38,7 @@ public class HttpClient {
         pw.write("\r\n");
         pw.flush();
         String line = fr.readLine();
-        String response = line;
+        System.out.println(line);
         switch(line.substring(9, line.length())) {
             case "200 OK":
                 // On lit les headers
@@ -67,23 +67,26 @@ public class HttpClient {
                     }
                     baos.flush();
                     LOG.log(Level.INFO, "Bytes read: " + total);
-                    response = new String(baos.toByteArray(), "UTF-8");
+                    String response = new String(baos.toByteArray(), "UTF-8");
+                    System.out.println(response);
                 }
                 break;
             case "301 Moved permanently":
+                String location = "";
                 line = fr.readLine();
                 while(line != null && line != "") {
                     switch(line.substring(0, line.indexOf(":"))) {
                         case "Location":
-                            String location = line.substring(line.indexOf(":") + 2, line.length());
-                            // TODO: redirection
+                            location = line.substring(line.indexOf(":") + 2, line.length());
                             break;
                         default:
                     }
+                    System.out.println(line);
                     line = fr.readLine();
                 }
+                // TODO: redirection
+                break;
             default:
         }
-        System.out.println(response);
     }
 }
