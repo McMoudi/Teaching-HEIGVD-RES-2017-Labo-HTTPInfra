@@ -1,6 +1,6 @@
 package ch.heigvd.res.labs.http.net.client;
 
-import ch.heigvd.res.labs.http.utils.ReadResponseFilterInputStream;
+import ch.heigvd.res.labs.http.utils.ReadHttpFilterInputStream;
 import ch.heigvd.res.labs.http.utils.MIMEType;
 
 import java.io.*;
@@ -13,12 +13,12 @@ public class HttpClient {
 
     private Socket clientSocket;
 
-    private ReadResponseFilterInputStream fr;
+    private ReadHttpFilterInputStream rh;
     private PrintWriter pw;
 
     public void connect(String server) throws IOException {
         clientSocket = new Socket(server, 80);
-        fr = new ReadResponseFilterInputStream(clientSocket.getInputStream());
+        rh = new ReadHttpFilterInputStream(clientSocket.getInputStream());
         pw = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
     }
 
@@ -37,13 +37,13 @@ public class HttpClient {
         //pw.write("Connection: close\r\n");
         pw.write("\r\n");
         pw.flush();
-        String line = fr.readLine();
+        String line = rh.readLine();
         System.out.println(line);
         switch(line.substring(9, line.length())) {
             case "200 OK":
                 // On lit les headers
                 int length = -1;
-                line = fr.readLine();
+                line = rh.readLine();
                 while(line != null && line != "") {
                     switch(line.substring(0, line.indexOf(":"))) {
                         case "Content-Length":
@@ -52,7 +52,7 @@ public class HttpClient {
                         default:
                     }
                     System.out.println(line);
-                    line = fr.readLine();
+                    line = rh.readLine();
                 }
 
                 if(length != -1) {
@@ -73,7 +73,7 @@ public class HttpClient {
                 break;
             case "301 Moved permanently":
                 String location;
-                line = fr.readLine();
+                line = rh.readLine();
                 while(line != null && line != "") {
                     switch(line.substring(0, line.indexOf(":"))) {
                         case "Location":
@@ -82,7 +82,7 @@ public class HttpClient {
                         default:
                     }
                     System.out.println(line);
-                    line = fr.readLine();
+                    line = rh.readLine();
                 }
                 // TODO redirection
                 break;

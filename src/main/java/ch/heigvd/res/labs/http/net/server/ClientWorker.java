@@ -10,26 +10,28 @@ import java.util.logging.Logger;
 public class ClientWorker implements Runnable {
     static final Logger LOG = Logger.getLogger(ClientWorker.class.getName());
 
-    private ClientHandler handler;
     private Socket clientSocket;
+    private ClientHandler handler;
     private HttpServer server;
 
-    private InputStream in;
-    private OutputStream out;
+    private InputStream is;
+    private OutputStream os;
 
     private boolean done;
 
-    public ClientWorker(Socket clientSocket, ClientHandler handler, HttpServer server) {
+    public ClientWorker(Socket clientSocket, ClientHandler handler, HttpServer server) throws IOException {
         done = false;
         this.clientSocket = clientSocket;
         this.handler = handler;
         this.server = server;
+        is = clientSocket.getInputStream();
+        os = clientSocket.getOutputStream();
     }
 
     @Override
     public void run() {
         try {
-            handler.handleClientConnection(clientSocket.getInputStream(), clientSocket.getOutputStream());
+            handler.handleClientConnection(is, os);
         } catch(IOException ex) {
             LOG.log(Level.SEVERE, "Exception in client handler: {0}", ex.getMessage());
         } finally {

@@ -2,7 +2,7 @@ package ch.heigvd.res.labs.http.utils;
 
 import java.io.*;
 
-public class ReadResponseFilterInputStream extends FilterInputStream {
+public class ReadHttpFilterInputStream extends FilterInputStream {
 
     /**
      * Creates a <code>FilterInputStream</code>
@@ -13,7 +13,7 @@ public class ReadResponseFilterInputStream extends FilterInputStream {
      * @param in the underlying input stream, or <code>null</code> if
      *           this instance is to be created without an underlying stream.
      */
-    public ReadResponseFilterInputStream(InputStream in) {
+    public ReadHttpFilterInputStream(InputStream in) {
         super(in);
     }
 
