@@ -5,6 +5,7 @@ public class MIMEType {
 
     public static final MIMEType APPLICATION_JSON = new MIMEType("application/json");
     public static final MIMEType APPLICATION_XML = new MIMEType("application/xml");
+    public static final MIMEType TEXT_ALL = new MIMEType("text/*");
     public static final MIMEType TEXT_HTML = new MIMEType("text/html");
 
     public MIMEType(String formatStr) {

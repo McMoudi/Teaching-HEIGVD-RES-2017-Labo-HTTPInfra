@@ -18,25 +18,49 @@ public class ClientHandler {
         String request = rh.readLine();
         //TODO vérifier la requête (bad request?)
         String[] requestElems = request.split(" ");
+        if(requestElems.length < 2) respondBadRequest();
+        String ressource = requestElems[1];
         switch(requestElems[0]) {
             case "GET":
-                String ressource = requestElems[1];
+                break;
+            case "HEAD":
+                break;
+            case "POST":
+                respondNotImplemented();
+                break;
+            case "PUT":
+                respondNotImplemented();
+                break;
+            case "DELETE":
+                respondNotImplemented();
+                break;
+            case "CONNECT":
+                respondNotImplemented();
+                break;
+            case "OPTIONS":
+                respondNotImplemented();
+                break;
+            case "TRACE":
+                respondNotImplemented();
+                break;
+            case "PATCH":
+                respondNotImplemented();
                 break;
             default:
-                returnNotImplemented();
+                respondBadRequest();
 
         }
     }
 
-    private void returnOK() {
+    private void respondOK() {
 
     }
 
-    private void returnBadRequest() {
+    private void respondBadRequest() {
 
     }
 
-    private void returnNotImplemented() {
-
+    private void respondNotImplemented() {
+        
     }
 }
