@@ -1,18 +1,18 @@
 package ch.heigvd.res.labs.http.utils;
 
-public class MIMEType {
-    private final String formatStr;
+    public enum MIMEType {
+        APPLICATION_JSON("application/json"),
+        APPLICATION_XML("application/xml"),
+        TEXT_ALL("text/*"),
+        TEXT_HTML("text/html");
 
-    public static final MIMEType APPLICATION_JSON = new MIMEType("application/json");
-    public static final MIMEType APPLICATION_XML = new MIMEType("application/xml");
-    public static final MIMEType TEXT_ALL = new MIMEType("text/*");
-    public static final MIMEType TEXT_HTML = new MIMEType("text/html");
+        private final String formatStr;
 
-    public MIMEType(String formatStr) {
-        this.formatStr = formatStr;
+        MIMEType(String formatStr) {
+            this.formatStr = formatStr;
+        }
+
+        public String getFormat() {
+            return formatStr;
+        }
     }
-
-    public String getFormat() {
-        return formatStr;
-    }
-}

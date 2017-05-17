@@ -1,5 +1,6 @@
 package ch.heigvd.res.labs.http.net.server;
 
+import ch.heigvd.res.labs.http.utils.MIMEType;
 import ch.heigvd.res.labs.http.utils.ReadHttpFilterInputStream;
 
 import java.io.*;
@@ -24,6 +25,10 @@ public class ClientHandler {
         String requestType = requestElems[0];
         String ressource = requestElems[1];
         // On lit les headers
+        String host;
+        MIMEType accept = MIMEType.TEXT_ALL;
+        String acceptCharset = "UTF-8";
+        int contentLength = 0;
         String line = rh.readLine();
         while(line != null && !line.equals("")) {
             if(line.indexOf(':') == -1) {
@@ -32,17 +37,34 @@ public class ClientHandler {
             }
             switch(line.substring(0, line.indexOf(':'))) {
                 case "Host":
-                    // TODO
+                    host = line.substring(line.indexOf(':') + 2, line.length());
                     break;
                 case "Accept":
-                    // TODO
+                    try {
+                        accept = MIMEType.valueOf(line.substring(line.indexOf(':') + 2, line.length()));
+                    } catch(IllegalArgumentException e) {
+                        accept = MIMEType.TEXT_ALL;
+                    }
+                    break;
+                case "Accept-charset":
+                    acceptCharset = line.substring(line.indexOf(':') + 2, line.length());
+                    break;
+                case "Content-length":
+                    try {
+                        contentLength = Integer.valueOf(line.substring(line.indexOf(':') + 2, line.length()));
+                    } catch(NumberFormatException e) {
+                        goodRequest = false;
+                        break;
+                    }
                     break;
                 default:
             }
             System.out.println(line);
             line = rh.readLine();
         }
-        if(goodRequest) {
+        if(!goodRequest) {
+            respondBadRequest();
+        } else {
             switch (requestType) {
                 case "GET":
                     // TODO
@@ -75,8 +97,7 @@ public class ClientHandler {
                     respondBadRequest();
 
             }
-        } else
-            respondBadRequest();
+        }
     }
 
     private void respondOK() {
