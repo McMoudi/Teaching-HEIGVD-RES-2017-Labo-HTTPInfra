@@ -40,11 +40,9 @@ public class ClientHandler {
                     host = line.substring(line.indexOf(':') + 2, line.length());
                     break;
                 case "Accept":
-                    try {
-                        accept = MIMEType.valueOf(line.substring(line.indexOf(':') + 2, line.length()));
-                    } catch(IllegalArgumentException e) {
+                    accept = MIMEType.getMimeType(line.substring(line.indexOf(':') + 2, line.length()));
+                    if(accept == null)
                         accept = MIMEType.TEXT_ALL;
-                    }
                     break;
                 case "Accept-charset":
                     acceptCharset = line.substring(line.indexOf(':') + 2, line.length());

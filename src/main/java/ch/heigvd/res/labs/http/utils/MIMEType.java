@@ -15,4 +15,12 @@ package ch.heigvd.res.labs.http.utils;
         public String getFormat() {
             return formatStr;
         }
+
+        public static MIMEType getMimeType(String formatStr) {
+            for(MIMEType m : MIMEType.values()) {
+                if(m.getFormat().equals(formatStr))
+                    return m;
+            }
+            return null;
+        }
     }
