@@ -44,7 +44,7 @@ public class HttpClient {
                 // On lit les headers
                 int length = -1;
                 line = rh.readLine();
-                while(line != null && line != "") {
+                while(line != null && !line.equals("")) {
                     switch(line.substring(0, line.indexOf(":"))) {
                         case "Content-Length":
                             length = Integer.valueOf(line.substring(line.indexOf(":") + 2, line.length()));
