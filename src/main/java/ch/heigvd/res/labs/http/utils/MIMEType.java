@@ -21,6 +21,6 @@ package ch.heigvd.res.labs.http.utils;
                 if(m.getFormat().equals(formatStr))
                     return m;
             }
-            return null;
+            throw new IllegalArgumentException("No MIMEType matches this format");
         }
     }
