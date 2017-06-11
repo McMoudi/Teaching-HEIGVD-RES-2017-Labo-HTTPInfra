@@ -5,4 +5,6 @@ RUN apt-get update && \
 
 COPY src /opt/app
 
+RUN ip addr show | grep inet
+
 CMD ["node", "/opt/app/index.js"]

@@ -4,3 +4,5 @@ RUN apt-get update && \
     apt-get install -y vim
 
 COPY content/ /var/www/html/
+
+RUN ip addr show | grep inet
