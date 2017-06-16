@@ -6,5 +6,5 @@ RUN apt-get update && \
 COPY conf/ /etc/apache2
 
 RUN mkdir /var/www/balancer-manager
-RUN a2enmod proxy proxy_http proxy_balancer lbmethod_byrequests
+RUN a2enmod proxy proxy_http proxy_balancer lbmethod_byrequests headers
 RUN a2ensite 000-*  002-*
