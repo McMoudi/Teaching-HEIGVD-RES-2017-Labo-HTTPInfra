@@ -89,6 +89,9 @@
                                       echo $myString;
                                       echo "<h5>I love using PHP!</h5>";
                                       ?></p>
+                                      <p>
+                                      and my ip is <?php echo getHostByName(getHostName()); ?>
+                                      </p>
             </div>
         </div>
     </section>
